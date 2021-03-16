@@ -34,7 +34,7 @@ pipeline {
 	  ])
 
 	step([
-		$class: 'MasterCoverageAction'
+		$class: 'MasterCoverageAction', scmVars: [GIT_URL: "https://github.com/lavanya10pl/nodejsdeplpy.git"]
 	])
 
         }
