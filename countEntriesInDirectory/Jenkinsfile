@@ -18,14 +18,23 @@ pipeline {
       steps {
         script {
           sh 'cd countEntriesInDirectory && npm test'
-	  sh 'cd countEntriesInDirectory && npm install MOCHA_FILE=./jenkins-test-results.xml ./node_modules/.bin/mocha tests/** --reporter mocha-junit-reporter'
+	  //sh 'cd countEntriesInDirectory && npm install MOCHA_FILE=./jenkins-test-results.xml ./node_modules/.bin/mocha tests/** --reporter mocha-junit-reporter'
         }
       }
-      /*post {
+      post {
         always {
-          step([$class: 'CoberturaPublisher', coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml'])
+          //step([$class: 'CoberturaPublisher', coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml'])
+	  step([
+	    $class: 'CloverPublisher',
+	    cloverReportDir: 'countEntriesInDirectory/coverage/',
+	    cloverReportFileName: 'clover.xml',
+	    healthyTarget: [methodCoverage: 70, conditionalCoverage: 80, statementCoverage: 80], 
+	    unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50],
+	    failingTarget: [methodCoverage: 0, conditionalCoverage: 0, statementCoverage: 0]     
+	  ])
+
         }
-      }*/
+      }
     }
   }
 }
