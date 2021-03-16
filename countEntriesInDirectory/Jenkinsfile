@@ -18,51 +18,14 @@ pipeline {
       steps {
         script {
           sh 'cd countEntriesInDirectory && npm test'
+	  sh 'cd countEntriesInDirectory && npm install MOCHA_FILE=./jenkins-test-results.xml ./node_modules/.bin/mocha tests/** --reporter mocha-junit-reporter'
         }
       }
-      post {
+      /*post {
         always {
           step([$class: 'CoberturaPublisher', coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml'])
         }
-      }
+      }*/
     }
- /*   stage('Build') {
-      steps {
-        script {
-          sh 'npm start'
-          sh 'npm pack'
-        }
-      }
-    }
-    stage('Deploy') {
-      when {
-        expression {
-          currentBuild.result == null || currentBuild.result == 'SUCCESS'
-        }
-      }
-      steps {
-        script {
-          def server = Artifactory.server 'My_Artifactory'
-          uploadArtifact(server)
-        }
-      }
-    }
-*/
   }
 }
-/*
-def uploadArtifact(server) {
-  def uploadSpec = """{
-            "files": [
-              {
-                "pattern": "continuous-test-code-coverage-guide*.tgz",
-                "target": "npm-stable/"
-              }
-           ]
-          }"""
-  server.upload(uploadSpec)
-
-  def buildInfo = Artifactory.newBuildInfo()
-  server.upload spec: uploadSpec, buildInfo: buildInfo
-  server.publishBuildInfo buildInfo
-}*/
