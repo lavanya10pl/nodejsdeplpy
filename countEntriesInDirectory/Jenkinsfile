@@ -3,7 +3,7 @@ pipeline {
 
 
   tools {
-    nodejs 'default-nodejs'
+    nodejs 'nodejs'
   }
 
   stages {
