@@ -1,7 +1,9 @@
 pipeline {
+/*
   tools {
     nodejs 'default-nodejs'
   }
+*/
   stages {
     stage('Startup') {
       steps {
@@ -46,6 +48,7 @@ pipeline {
 */
   }
 }
+/*
 def uploadArtifact(server) {
   def uploadSpec = """{
             "files": [
@@ -60,4 +63,4 @@ def uploadArtifact(server) {
   def buildInfo = Artifactory.newBuildInfo()
   server.upload spec: uploadSpec, buildInfo: buildInfo
   server.publishBuildInfo buildInfo
-}
+}*/
